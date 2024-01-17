@@ -1,0 +1,66 @@
+﻿@model StudentViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Upraviť</h1>
+
+<h4>Študent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data"> 
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mobil" class="control-label"></label>
+                <input asp-for="Mobil" class="form-control" />
+                <span asp-validation-for="Mobil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FavouriteSubjectId" class="control-label">Favourite Subject</label>
+                <select asp-for="FavouriteSubjectId" class="form-control" asp-items="Model.Subjects"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label">Image</label>
+                <input type="hidden" name="OldImage" value="@Model.Image" />
+                <input type="file" name="image" id="image" />
+                @if (string.IsNullOrWhiteSpace(Model.Image))
+                {
+                    <p>No image</p>
+                }
+                else
+                {
+                    <img src="data:image/png;base64,@Html.DisplayFor(model => model.Image)" alt="Image" width="500"   />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
